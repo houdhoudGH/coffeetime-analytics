@@ -33,3 +33,10 @@ Thumbs.db
 model/
 *.bin
 *.gguf
+
+.env
+.venv/
+data/raw/
+__pycache__/
+*.pyc
+.ipynb_checkpoints/
