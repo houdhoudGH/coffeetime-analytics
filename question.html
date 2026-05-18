@@ -1,0 +1,301 @@
+<!DOCTYPE html>
+<html lang="en" data-theme="light">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="Contact us with questions or feedback about Coffee Sales Analytics">
+    <title>Questions | CoffeeTime Analytics</title>
+    <link rel="stylesheet" href="/static/pico.min.css">
+    <link rel="stylesheet" href="/static/style.css">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+</head>
+<body>
+
+<nav class="main-nav">
+    <ul>
+        <li><strong class="brand"><i class="fa-solid fa-mug-hot"></i> CoffeeTime</strong></li>
+    </ul>
+    <ul>
+        <li><a href="/">Home</a></li>
+        <li><a href="/eda">EDA</a></li>
+        <li><a href="/modeling">Modeling</a></li>
+        <li><a href="/question" class="active">Questions</a></li>
+        <li class="nav-theme-switcher">
+            <button class="nav-color-btn coffee" data-theme="coffee" title="Coffee Theme"></button>
+            <button class="nav-color-btn pink" data-theme="pink" title="Pink Theme"></button>
+            <button class="nav-color-btn blue" data-theme="blue" title="Blue Theme"></button>
+            <button class="nav-color-btn green" data-theme="green" title="Green Theme"></button>
+        </li>
+        <li>
+            <button id="theme-toggle" class="theme-btn" title="Toggle Dark/Light Mode">
+                <span class="theme-icon"><i class="fa-solid fa-moon"></i></span>
+            </button>
+        </li>
+    </ul>
+</nav>
+
+<main class="container">
+
+    <section class="glass-card" style="text-align: center;">
+        <h1><i class="fa-solid fa-comments"></i> Questions & Feedback</h1>
+        <p class="hero-subtitle">Have questions about the analysis? Leave your thoughts here!</p>
+    </section>
+
+    <section class="glass-card">
+        <h2><i class="fa-solid fa-paper-plane"></i> Send Us a Message</h2>
+        
+        <form id="contact-form" action="/question" method="POST" class="filter-form">
+            <div class="form-group">
+                <label for="name">Your Name <span style="color: #c0392b;">*</span></label>
+                <input type="text" id="name" name="name" required placeholder="John Doe" minlength="2" maxlength="100">
+                <span class="error-message" id="name-error"></span>
+            </div>
+
+            <div class="form-group">
+                <label for="email">Email (optional)</label>
+                <input type="email" id="email" name="email" placeholder="john@example.com">
+                <span class="error-message" id="email-error"></span>
+            </div>
+
+            <div class="form-group">
+                <label for="category">Category</label>
+                <select id="category" name="category">
+                    <option value="general">General Question</option>
+                    <option value="technical">Technical Issue</option>
+                    <option value="data">Data Related</option>
+                    <option value="feedback">Feedback</option>
+                </select>
+            </div>
+
+            <div class="form-group">
+                <label for="message">Your Message <span style="color: #c0392b;">*</span></label>
+                <textarea id="message" name="message" rows="5" required placeholder="I loved the coffee sales analysis!" minlength="10" maxlength="1000"></textarea>
+                <span class="error-message" id="message-error"></span>
+                <small id="char-count" style="color: var(--text-muted);">0/1000 characters</small>
+            </div>
+
+            <div class="form-actions">
+                <button type="submit" class="btn-primary" id="submit-btn">
+                    <span id="submit-text">Send Message</span>
+                    <span id="submit-loading" style="display: none;">Sending...</span>
+                </button>
+                <button type="reset" class="btn-secondary">Clear Form</button>
+            </div>
+
+            <div id="form-status" class="form-errors"></div>
+        </form>
+    </section>
+
+    <section id="success-message" class="glass-card" style="display: none; text-align: center;">
+        <div style="font-size: 4rem; margin-bottom: 1rem;"><i class="fa-solid fa-circle-check" style="color: #27ae60;"></i></div>
+        <h2>Thank You!</h2>
+        <p>Your message has been sent successfully. We appreciate your feedback!</p>
+        <button class="btn-primary" onclick="resetForm()">Send Another Message</button>
+    </section>
+
+    <section class="glass-card">
+        <div class="section-header clickable" id="faq-header">
+            <h2><i class="fa-solid fa-circle-question"></i> Frequently Asked Questions</h2>
+            <span class="toggle-arrow"><i class="fa-solid fa-chevron-down"></i></span>
+        </div>
+        <div id="faq-content" class="insights-content">
+            <div class="insight-card">
+                <h4>What data is used?</h4>
+                <p>We use coffee shop sales data from 2024, including transaction amounts, times, and coffee types.</p>
+            </div>
+            <div class="insight-card">
+                <h4>What models are used?</h4>
+                <p>We compare ARIMA, Auto ARIMA, and SARIMAX for time series forecasting.</p>
+            </div>
+            <div class="insight-card">
+                <h4>Can I download the data?</h4>
+                <p>The raw CSV data is available in the /data/raw directory of this project.</p>
+            </div>
+            <div class="insight-card">
+                <h4>How accurate are forecasts?</h4>
+                <p>SARIMAX achieves the best MAE of 3.54, making it suitable for short-term predictions.</p>
+            </div>
+        </div>
+    </section>
+
+</main>
+
+<footer class="main-footer">
+    <div class="footer-content container">
+        <div class="footer-section">
+            <h4><i class="fa-solid fa-mug-hot"></i> CoffeeTime Analytics</h4>
+            <p>Time series forecasting for coffee sales data.</p>
+        </div>
+        <div class="footer-section">
+            <h4>Quick Links</h4>
+            <ul>
+                <li><a href="/">Home</a></li>
+                <li><a href="/eda">EDA</a></li>
+                <li><a href="/modeling">Modeling</a></li>
+                <li><a href="/question">Contact</a></li>
+            </ul>
+        </div>
+    </div>
+    <div class="footer-bottom">
+        <p>&copy; 2024 CoffeeTime Analytics</p>
+    </div>
+</footer>
+
+<script>
+document.addEventListener('DOMContentLoaded', function() {
+    const themeToggle = document.getElementById('theme-toggle');
+    const themeIcon = document.querySelector('.theme-icon');
+    
+    const savedTheme = localStorage.getItem('theme') || 'light';
+    document.documentElement.setAttribute('data-theme', savedTheme);
+    themeIcon.innerHTML = savedTheme === 'light' ? '<i class="fa-solid fa-moon"></i>' : '<i class="fa-solid fa-sun"></i>';
+    
+    themeToggle.addEventListener('click', () => {
+        const currentTheme = document.documentElement.getAttribute('data-theme');
+        const newTheme = currentTheme === 'light' ? 'dark' : 'light';
+        document.documentElement.setAttribute('data-theme', newTheme);
+        localStorage.setItem('theme', newTheme);
+        themeIcon.innerHTML = newTheme === 'light' ? '<i class="fa-solid fa-moon"></i>' : '<i class="fa-solid fa-sun"></i>';
+    });
+    
+
+    const urlParams = new URLSearchParams(window.location.search);
+    if (urlParams.get('success') === '1') {
+        document.getElementById('contact-form').parentElement.style.display = 'none';
+        document.getElementById('success-message').style.display = 'block';
+    }
+    
+    initFormValidation();
+    
+    initFAQToggle();
+});
+
+function initFormValidation() {
+    const form = document.getElementById('contact-form');
+    const nameInput = document.getElementById('name');
+    const emailInput = document.getElementById('email');
+    const messageInput = document.getElementById('message');
+    const charCount = document.getElementById('char-count');
+    
+
+    messageInput.addEventListener('input', () => {
+        const count = messageInput.value.length;
+        charCount.textContent = `${count}/1000 characters`;
+        charCount.style.color = count > 900 ? '#c0392b' : 'var(--text-muted)';
+    });
+    
+    nameInput.addEventListener('blur', () => validateField(nameInput, 'name'));
+    emailInput.addEventListener('blur', () => validateEmail(emailInput));
+    messageInput.addEventListener('blur', () => validateField(messageInput, 'message'));
+   
+    form.addEventListener('submit', (e) => {
+        let isValid = true;
+        
+        if (!validateField(nameInput, 'name')) isValid = false;
+        if (!validateEmail(emailInput)) isValid = false;
+        if (!validateField(messageInput, 'message')) isValid = false;
+        
+        if (!isValid) {
+            e.preventDefault();
+            document.getElementById('form-status').textContent = 'Please fix the errors above.';
+        } else {
+            document.getElementById('submit-text').style.display = 'none';
+            document.getElementById('submit-loading').style.display = 'inline';
+        }
+    });
+}
+
+function validateField(input, fieldName) {
+    const errorEl = document.getElementById(`${fieldName}-error`);
+    const value = input.value.trim();
+    
+    if (!value) {
+        showError(input, errorEl, `${fieldName.charAt(0).toUpperCase() + fieldName.slice(1)} is required`);
+        return false;
+    }
+    
+    if (value.length < input.minLength) {
+        showError(input, errorEl, `Minimum ${input.minLength} characters required`);
+        return false;
+    }
+    
+    clearError(input, errorEl);
+    return true;
+}
+
+function validateEmail(input) {
+    const errorEl = document.getElementById('email-error');
+    const value = input.value.trim();
+    
+    if (value && !/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(value)) {
+        showError(input, errorEl, 'Please enter a valid email address');
+        return false;
+    }
+    
+    clearError(input, errorEl);
+    return true;
+}
+
+function showError(input, errorEl, message) {
+    input.style.borderColor = '#c0392b';
+    if (errorEl) {
+        errorEl.textContent = message;
+        errorEl.style.color = '#c0392b';
+        errorEl.style.fontSize = '0.85rem';
+        errorEl.style.marginTop = '0.25rem';
+    }
+}
+
+function clearError(input, errorEl) {
+    input.style.borderColor = '';
+    if (errorEl) errorEl.textContent = '';
+}
+
+function resetForm() {
+    document.getElementById('contact-form').reset();
+    document.getElementById('contact-form').parentElement.style.display = 'block';
+    document.getElementById('success-message').style.display = 'none';
+    window.history.replaceState({}, document.title, '/question');
+}
+
+function initFAQToggle() {
+    const header = document.getElementById('faq-header');
+    const content = document.getElementById('faq-content');
+    
+    if (header && content) {
+        header.addEventListener('click', () => {
+            content.classList.toggle('collapsed');
+            header.querySelector('.toggle-arrow').classList.toggle('collapsed');
+        });
+    }
+}
+</script>
+    <div class="chatbot-container">
+        <div class="chat-window" id="chat-window">
+            <div class="chat-header">
+                <div class="chat-header-info">
+                    <div class="status-dot"></div>
+                    <h3>☕ Coffee Assistant</h3>
+                </div>
+                <span class="close-chat" id="close-chat">&times;</span>
+            </div>
+            <div class="chat-messages" id="chat-messages">
+            </div>
+            <div class="chat-input-area">
+                <input type="text" id="chat-input" placeholder="Type a message...">
+                <button class="send-btn" id="send-chat" title="Send message">
+                    <svg viewBox="0 0 24 24"><path d="M2.01 21L23 12 2.01 3 2 10l15 2-15 2z"></path></svg>
+                </button>
+            </div>
+        </div>
+        <div class="chatbot-bubble" id="chatbot-bubble" title="Chat with us">
+            <img src="/static/img/chatbot-icon.svg" alt="Chatbot" class="bubble-icon">
+        </div>
+    </div>
+
+    <link rel="stylesheet" href="/static/chatbot.css">
+    <script src="/static/chatbot.js"></script>
+    <script src="/static/script.js"></script>
+</body>
+</html>

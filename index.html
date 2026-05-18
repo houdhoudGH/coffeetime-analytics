@@ -1,0 +1,201 @@
+<!DOCTYPE html>
+<html lang="en" data-theme="light">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="Coffee Sales Time Series Forecasting - Analyze and predict coffee shop sales using ARIMA, SARIMA, and SARIMAX models">
+    <title>Coffee Sales Time Series Forecasting | CoffeeTime Analytics</title>
+    <link rel="stylesheet" href="/static/pico.min.css">
+    <link rel="stylesheet" href="/static/style.css">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <script src="https://d3js.org/d3.v7.min.js"></script>
+</head>
+
+<body>
+
+<nav class="main-nav">
+    <ul>
+        <li><strong class="brand"><i class="fa-solid fa-mug-hot"></i> CoffeeTime</strong></li>
+    </ul>
+    <ul>
+        <li><a href="/" class="active">Home</a></li>
+        <li><a href="/eda">EDA</a></li>
+        <li><a href="/modeling">Modeling</a></li>
+        <li><a href="/question">Questions</a></li>
+        <li class="nav-theme-switcher">
+            <button class="nav-color-btn coffee" data-theme="coffee" title="Coffee Theme"></button>
+            <button class="nav-color-btn pink" data-theme="pink" title="Pink Theme"></button>
+            <button class="nav-color-btn blue" data-theme="blue" title="Blue Theme"></button>
+            <button class="nav-color-btn green" data-theme="green" title="Green Theme"></button>
+        </li>
+        <li>
+            <button id="theme-toggle" class="theme-btn" title="Toggle Dark/Light Mode">
+                <span class="theme-icon"><i class="fa-solid fa-moon"></i></span>
+            </button>
+        </li>
+    </ul>
+</nav>
+
+<main class="container">
+
+    
+    <section class="hero glass-card animate-float">
+        <div class="hero-content">
+            <h1 class="animate-gradient-text">Mastering the Art of <br>Coffee Sales Forecasting</h1>
+            <p class="hero-subtitle animate-fade-in-up">
+                Sophisticated Time Series Analysis for the Perfect Brew. <br>
+                ARIMA, SARIMA, and SARIMAX insights at your fingertips.
+            </p>
+        </div>
+        <div class="hero-image">
+            <img src="static/img/coffee.jpg" alt="Coffee Sales Analytics" class="hero-img animate-float-slow">
+            <div class="image-glow"></div>
+        </div>
+    </section>
+
+    <section class="insights-section glass-card">
+        <div class="section-header clickable" id="insights-header">
+            <h2><i class="fa-solid fa-lightbulb"></i> Key Insights</h2>
+            <span class="toggle-arrow"><i class="fa-solid fa-chevron-down"></i></span>
+        </div>
+        <div id="insights-content" class="insights-content">
+            <div class="insight-card">
+                <div class="insight-icon"><i class="fa-solid fa-calendar-days"></i></div>
+                <h4>Seasonal Patterns</h4>
+                <p>Fall and winter months show the highest coffee sales, with peaks in October and February.</p>
+            </div>
+            <div class="insight-card">
+                <div class="insight-icon"><i class="fa-solid fa-clock"></i></div>
+                <h4>Peak Hours</h4>
+                <p>The morning rush between 10-12 AM consistently shows the highest transaction volumes.</p>
+            </div>
+            <div class="insight-card">
+                <div class="insight-icon"><i class="fa-solid fa-mug-hot"></i></div>
+                <h4>Popular Drinks</h4>
+                <p>Latte generates the highest revenue despite Americano with Milk being the most purchased.</p>
+            </div>
+            <div class="insight-card">
+                <div class="insight-icon"><i class="fa-solid fa-chart-line"></i></div>
+                <h4>Growth Trend</h4>
+                <p>Overall sales show a positive trend with predictable weekly and seasonal variations.</p>
+            </div>
+        </div>
+    </section>
+
+    <section class="journey-section glass-card">
+        <h2><i class="fa-solid fa-rocket"></i> The Analysis Journey</h2>
+        <div class="flow-container">
+            <div class="flow-step">
+                <div class="step-number">1</div>
+                <h3>Raw Dataset <i class="fa-solid fa-arrow-right"></i> Time Series</h3>
+                <p>Your coffee shop sales data is transformed into a clean, structured time series.</p>
+            </div>
+
+            <div class="flow-arrow"><i class="fa-solid fa-arrow-right"></i></div>
+
+            <div class="flow-step">
+                <div class="step-number">2</div>
+                <h3>Visual Exploratory Analysis</h3>
+                <p>Hourly peaks, weekly habits, seasonal trends — all revealed through clean charts.</p>
+            </div>
+
+            <div class="flow-arrow"><i class="fa-solid fa-arrow-right"></i></div>
+
+            <div class="flow-step">
+                <div class="step-number">3</div>
+                <h3>Forecasting Models</h3>
+                <p>ARIMA, SARIMA, and SARIMAX models predict when the coffee machine works hardest!</p>
+            </div>
+        </div>
+    </section>
+
+    <section class="dataset-section glass-card">
+        <div class="section-header clickable" id="dataset-header">
+            <h2><i class="fa-solid fa-table"></i> Sample Dataset</h2>
+            <span class="toggle-arrow"><i class="fa-solid fa-chevron-down"></i></span>
+        </div>
+        <div id="dataset-content" class="dataset-content">
+            <p class="dataset-description">Below is a sample of the chronological coffee sales data used in this analysis:</p>
+            <div class="table-container">
+                <table class="data-table">
+                    <thead>
+                        <tr>
+                            <th>Date</th>
+                            <th>Time</th>
+                            <th>Type</th>
+                            <th>Amount</th>
+                            <th>Coffee</th>
+                        </tr>
+                    </thead>
+                    <tbody id="sample-data-table">
+                    </tbody>
+                </table>
+            </div>
+            <button id="load-more-data" class="btn-secondary">Load More Data</button>
+        </div>
+    </section>
+
+</main>
+
+<footer class="main-footer">
+    <div class="footer-content container">
+        <div class="footer-section">
+            <h4><i class="fa-solid fa-mug-hot"></i> CoffeeTime Analytics</h4>
+            <p>Time series forecasting for coffee sales data. Built with Flask, Chart.js, and D3.js.</p>
+        </div>
+        <div class="footer-section">
+            <h4>Quick Links</h4>
+            <ul>
+                <li><a href="/">Home</a></li>
+                <li><a href="/eda">Exploratory Data Analysis</a></li>
+                <li><a href="/modeling">Forecasting Models</a></li>
+                <li><a href="/question">Contact</a></li>
+            </ul>
+        </div>
+        <div class="footer-section">
+            <h4>Technologies</h4>
+            <ul>
+                <li>Flask (Python)</li>
+                <li>Chart.js</li>
+                <li>D3.js</li>
+                <li>Pico CSS</li>
+            </ul>
+        </div>
+    </div>
+    <div class="footer-bottom">
+        <p>&copy; 2024 CoffeeTime Analytics. Time Series Forecasting Project.</p>
+    </div>
+</footer>
+
+    
+    <div class="chatbot-container">
+        <div class="chat-window" id="chat-window">
+            <div class="chat-header">
+                <div class="chat-header-info">
+                    <div class="status-dot"></div>
+                    <h3>☕ Coffee Assistant</h3>
+                </div>
+                <span class="close-chat" id="close-chat">&times;</span>
+            </div>
+            <div class="chat-messages" id="chat-messages">
+                
+            </div>
+            <div class="chat-input-area">
+                <input type="text" id="chat-input" placeholder="Type a message...">
+                <button class="send-btn" id="send-chat" title="Send message">
+                    <svg viewBox="0 0 24 24"><path d="M2.01 21L23 12 2.01 3 2 10l15 2-15 2z"></path></svg>
+                </button>
+            </div>
+        </div>
+        <div class="chatbot-bubble" id="chatbot-bubble" title="Chat with us">
+            <img src="/static/img/chatbot-icon.svg" alt="Chatbot" class="bubble-icon">
+        </div>
+    </div>
+
+    <link rel="stylesheet" href="/static/chatbot.css">
+    <script src="/static/chatbot.js"></script>
+    <script src="/static/script.js"></script>
+</body>
+</html>

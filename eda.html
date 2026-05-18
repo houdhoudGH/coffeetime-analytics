@@ -1,0 +1,291 @@
+<!DOCTYPE html>
+<html lang="en" data-theme="light">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="Exploratory Data Analysis of Coffee Sales - Discover patterns in hourly, daily, and monthly sales data">
+    <title>EDA – Coffee Sales Analysis | CoffeeTime Analytics</title>
+    <link rel="stylesheet" href="/static/pico.min.css">
+    <link rel="stylesheet" href="/static/style.css">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <script src="https://d3js.org/d3.v7.min.js"></script>
+</head>
+
+<body>
+
+<nav class="main-nav">
+    <ul>
+        <li><strong class="brand"><i class="fa-solid fa-mug-hot"></i> CoffeeTime</strong></li>
+    </ul>
+    <ul>
+        <li><a href="/">Home</a></li>
+        <li><a href="/eda" class="active">EDA</a></li>
+        <li><a href="/modeling">Modeling</a></li>
+        <li><a href="/question">Questions</a></li>
+        <li class="nav-theme-switcher">
+            <button class="nav-color-btn coffee" data-theme="coffee" title="Coffee Theme"></button>
+            <button class="nav-color-btn pink" data-theme="pink" title="Pink Theme"></button>
+            <button class="nav-color-btn blue" data-theme="blue" title="Blue Theme"></button>
+            <button class="nav-color-btn green" data-theme="green" title="Green Theme"></button>
+        </li>
+        <li>
+            <button id="theme-toggle" class="theme-btn" title="Toggle Dark/Light Mode">
+                <span class="theme-icon"><i class="fa-solid fa-moon"></i></span>
+            </button>
+        </li>
+    </ul>
+</nav>
+
+<main class="container">
+
+    <section class="glass-card" style="text-align: center;">
+        <h1><i class="fa-solid fa-chart-bar"></i> Exploratory Data Analysis</h1>
+        <p class="hero-subtitle">Discover patterns in coffee sales through comprehensive visual analysis</p>
+        <div class="hero-stats" id="hero-stats">
+            <div class="stat-card">
+                <span class="stat-value" id="total-revenue">--</span>
+                <span class="stat-label">Total Revenue</span>
+            </div>
+            <div class="stat-card">
+                <span class="stat-value" id="total-transactions">--</span>
+                <span class="stat-label">Transactions</span>
+            </div>
+            <div class="stat-card">
+                <span class="stat-value" id="unique-days">--</span>
+                <span class="stat-label">Days Analyzed</span>
+            </div>
+        </div>
+    </section>
+
+   
+    <section class="controls-section glass-card">
+        <h2><i class="fa-solid fa-sliders"></i> Data Filters</h2>
+        <form id="data-filter-form" class="filter-form">
+            <div class="form-row">
+                <div class="form-group">
+                    <label for="start-date">Start Date</label>
+                    <input type="date" id="start-date" name="start_date" value="2024-03-01">
+                </div>
+                <div class="form-group">
+                    <label for="end-date">End Date</label>
+                    <input type="date" id="end-date" name="end_date" value="2024-12-31">
+                </div>
+                <div class="form-group">
+                    <label for="coffee-type">Coffee Type</label>
+                    <select id="coffee-type" name="coffee_type">
+                        <option value="all">All Types</option>
+                    </select>
+                </div>
+                <div class="form-group">
+                    <label for="group-by">Group By</label>
+                    <select id="group-by" name="group_by">
+                        <option value="monthly">Monthly</option>
+                        <option value="daily">Daily</option>
+                        <option value="hourly">Hourly</option>
+                    </select>
+                </div>
+            </div>
+            <div class="form-actions">
+                <button type="submit" class="btn-primary">Apply Filters</button>
+                <button type="button" id="reset-filters" class="btn-secondary">Reset</button>
+            </div>
+            <div id="form-errors" class="form-errors"></div>
+        </form>
+    </section>
+
+    
+    <section class="charts-section">
+        <div class="section-header">
+            <h2><i class="fa-solid fa-chart-line"></i> Sales Visualization</h2>
+            <div class="chart-controls">
+                <button id="toggle-charts" class="btn-toggle">
+                    <span class="toggle-icon"><i class="fa-solid fa-eye-slash"></i></span> Hide Charts
+                </button>
+                <button id="refresh-data" class="btn-refresh">
+                    <span class="refresh-icon"><i class="fa-solid fa-rotate"></i></span> Refresh
+                </button>
+                <button id="export-png" class="btn-export">
+                    <span class="export-icon"><i class="fa-solid fa-camera"></i></span> Export PNG
+                </button>
+            </div>
+        </div>
+
+        <div id="charts-container" class="charts-container">
+           
+            <div class="chart-card glass-card">
+                <h3><i class="fa-solid fa-chart-area"></i> Monthly Sales Trend (Chart.js)</h3>
+                <p class="chart-description">Interactive line chart showing monthly coffee sales. Click on legend items to toggle visibility.</p>
+                <div class="chart-wrapper">
+                    <canvas id="chartjs-line-chart"></canvas>
+                </div>
+                <div class="chart-legend" id="chartjs-legend"></div>
+            </div>
+
+            
+            <div class="chart-card glass-card">
+                <h3><i class="fa-solid fa-mug-hot"></i> Sales by Coffee Type (D3.js)</h3>
+                <p class="chart-description">Bar chart with hover effects and animations. Click on a bar to filter all data by that coffee type.</p>
+                <div class="d3-chart-wrapper" id="d3-bar-chart"></div>
+                <div class="d3-tooltip" id="d3-tooltip"></div>
+            </div>
+        </div>
+    </section>
+
+   
+    <section class="glass-card">
+        <h2><i class="fa-solid fa-magnifying-glass-chart"></i> Static Analysis Visualizations</h2>
+        <div class="filters">
+            <button class="filter-btn active" data-filter="all">All</button>
+            <button class="filter-btn" data-filter="hourly">Hourly</button>
+            <button class="filter-btn" data-filter="daily">Daily</button>
+            <button class="filter-btn" data-filter="monthly">Monthly</button>
+            <button class="filter-btn" data-filter="product">Product</button>
+        </div>
+    </section>
+
+    
+    <article data-category="hourly" class="glass-card">
+        <h3><i class="fa-solid fa-clock"></i> Hourly Coffee Sales</h3>
+        <img src="static/img/eda/hourly_sales.png" class="plot-img" alt="Hourly Sales Distribution">
+        <p class="insight">
+            Sales rise sharply from 8 AM, peak around 10–12 AM, and slowly decline in the afternoon.
+            Morning coffee rush is clearly the dominant pattern.
+        </p>
+    </article>
+
+    <article data-category="hourly" class="glass-card">
+        <h3><i class="fa-solid fa-chart-column"></i> Sales Revenue by Hour and Coffee Type</h3>
+        <img src="static/img/eda/revenue_by_hour_type.png" class="plot-img" alt="Revenue by Hour and Type">
+        <p class="insight">
+            Different coffee types peak at different times. Latte and Americano with Milk surge in the morning,
+            while Espresso peaks later in the afternoon. Preferences are time-dependent and drink-specific.
+        </p>
+    </article>
+
+    <article data-category="daily" class="glass-card">
+        <h3><i class="fa-solid fa-calendar-days"></i> Daily Sales for the Year</h3>
+        <img src="static/img/eda/daily_sales.png" class="plot-img" alt="Daily Sales Trend">
+        <p class="insight">
+            Daily sales show recurring cycles and significant weekend variation.
+            High-demand periods appear around early fall.
+        </p>
+    </article>
+
+    <article data-category="hourly" class="glass-card">
+        <h3><i class="fa-solid fa-calendar-week"></i> Hourly Sales by Day of the Week (Sum)</h3>
+        <img src="static/img/eda/hourly_by_day_sum.png" class="plot-img" alt="Hourly by Day Sum">
+        <p class="insight">
+            Across all weekdays, 10–12 AM is consistently the busiest period.
+            Fridays show higher afternoon sales, Sundays remain low.
+        </p>
+    </article>
+
+    <article data-category="hourly" class="glass-card">
+        <h3><i class="fa-solid fa-chart-line"></i> Hourly Sales by Day of the Week (Average)</h3>
+        <img src="static/img/eda/hourly_by_day_avg.png" class="plot-img" alt="Hourly by Day Average">
+        <p class="insight">
+            Average hourly spending peaks in late morning. Monday and Tuesday have the highest averages,
+            suggesting workweek coffee reliance.
+        </p>
+    </article>
+
+    <article data-category="monthly" class="glass-card">
+        <h3><i class="fa-solid fa-box"></i> Monthly Distribution of Sales</h3>
+        <img src="static/img/eda/monthly_distribution.png" class="plot-img" alt="Monthly Distribution">
+        <p class="insight">
+            Sales variability is highest in summer months, while fall months show tighter distributions
+            and higher medians. Seasonality is evident.
+        </p>
+    </article>
+
+    <article data-category="monthly" class="glass-card">
+        <h3><i class="fa-solid fa-chart-bar"></i> Total Coffee Sales per Month</h3>
+        <img src="static/img/eda/monthly_total_sales.png" class="plot-img" alt="Monthly Total Sales">
+        <p class="insight">
+            Peaks occur in October and February, while March, April, and July are lower.
+            Fall and winter are high-demand seasons.
+        </p>
+    </article>
+
+    <article data-category="monthly" class="glass-card">
+        <h3><i class="fa-solid fa-mug-hot"></i> Monthly Sales Revenue per Coffee Type</h3>
+        <img src="static/img/eda/monthly_sales_by_type.png" class="plot-img" alt="Monthly Sales by Type">
+        <p class="insight">
+            Most drinks follow predictable monthly patterns. Hot Chocolate and Cocoa increase in cold months,
+            confirming weather-driven taste preferences.
+        </p>
+    </article>
+
+    <article data-category="product" class="glass-card">
+        <h3><i class="fa-solid fa-trophy"></i> Coffee Popularity (Number of Purchases)</h3>
+        <img src="static/img/eda/popularity_count.png" class="plot-img" alt="Popularity Count">
+        <p class="insight">
+            Most purchased: Americano with Milk, followed by Latte. Espresso is least popular.
+            Customers prefer smoother, milk-based drinks.
+        </p>
+    </article>
+
+    <article data-category="product" class="glass-card">
+        <h3><i class="fa-solid fa-dollar-sign"></i> Total Sales by Coffee Type (Revenue)</h3>
+        <img src="static/img/eda/revenue_by_type.png" class="plot-img" alt="Revenue by Type">
+        <p class="insight">
+            Latte generates the highest revenue despite not being the most purchased.  
+            High-value drinks drive revenue more than quantity.
+        </p>
+    </article>
+
+</main>
+
+<footer class="main-footer">
+    <div class="footer-content container">
+        <div class="footer-section">
+            <h4><i class="fa-solid fa-mug-hot"></i> CoffeeTime Analytics</h4>
+            <p>Time series forecasting for coffee sales data.</p>
+        </div>
+        <div class="footer-section">
+            <h4>Quick Links</h4>
+            <ul>
+                <li><a href="/">Home</a></li>
+                <li><a href="/eda">EDA</a></li>
+                <li><a href="/modeling">Modeling</a></li>
+                <li><a href="/question">Contact</a></li>
+            </ul>
+        </div>
+    </div>
+    <div class="footer-bottom">
+        <p>&copy; 2024 CoffeeTime Analytics</p>
+    </div>
+</footer>
+
+
+<div class="chatbot-container">
+    <div class="chat-window" id="chat-window">
+        <div class="chat-header">
+            <div class="chat-header-info">
+                <div class="status-dot"></div>
+                <h3>☕ Coffee Assistant</h3>
+            </div>
+            <span class="close-chat" id="close-chat">&times;</span>
+        </div>
+        <div class="chat-messages" id="chat-messages">
+            <!-- Messages will appear here -->
+        </div>
+        <div class="chat-input-area">
+            <input type="text" id="chat-input" placeholder="Type a message...">
+            <button class="send-btn" id="send-chat" title="Send message">
+                <svg viewBox="0 0 24 24"><path d="M2.01 21L23 12 2.01 3 2 10l15 2-15 2z"></path></svg>
+            </button>
+        </div>
+    </div>
+    <div class="chatbot-bubble" id="chatbot-bubble" title="Chat with us">
+        <img src="/static/img/chatbot-icon.svg" alt="Chatbot" class="bubble-icon">
+    </div>
+</div>
+
+<link rel="stylesheet" href="/static/chatbot.css">
+<script src="/static/chatbot.js"></script>
+<script src="/static/script.js"></script>
+</body>
+</html>

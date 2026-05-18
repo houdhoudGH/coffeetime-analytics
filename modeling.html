@@ -1,0 +1,1168 @@
+<!DOCTYPE html>
+<html lang="en" data-theme="light">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="Coffee Sales Forecasting Models - Compare ARIMA, SARIMA, and SARIMAX model performance">
+    <title>Forecasting Models | CoffeeTime Analytics</title>
+    <link rel="stylesheet" href="/static/pico.min.css">
+    <link rel="stylesheet" href="/static/style.css">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <script src="https://d3js.org/d3.v7.min.js"></script>
+    <style>
+        
+        .hero-modeling {
+            background: linear-gradient(135deg, var(--primary-color) 0%, var(--primary-light) 100%);
+            color: white;
+            padding: 3rem;
+            border-radius: var(--border-radius-lg);
+            text-align: center;
+            margin-bottom: 2rem;
+            position: relative;
+            overflow: hidden;
+        }
+        
+        .hero-modeling::before {
+            content: '';
+            position: absolute;
+            top: -50%;
+            left: -50%;
+            width: 200%;
+            height: 200%;
+            background: radial-gradient(circle, rgba(255,255,255,0.1) 0%, transparent 60%);
+            animation: rotate 20s linear infinite;
+        }
+        
+        @keyframes rotate {
+            from { transform: rotate(0deg); }
+            to { transform: rotate(360deg); }
+        }
+        
+        .hero-modeling h1, .hero-modeling p {
+            position: relative;
+            z-index: 1;
+        }
+        
+        .hero-modeling h1 {
+            font-size: 2.5rem;
+            margin-bottom: 0.5rem;
+            color: white;
+        }
+        
+        .model-stats {
+            display: flex;
+            justify-content: center;
+            gap: 2rem;
+            margin-top: 2rem;
+            flex-wrap: wrap;
+            position: relative;
+            z-index: 1;
+        }
+        
+        .model-stat {
+            background: rgba(255,255,255,0.15);
+            backdrop-filter: blur(10px);
+            padding: 1rem 2rem;
+            border-radius: var(--border-radius-md);
+            border: 1px solid rgba(255,255,255,0.2);
+        }
+        
+        .model-stat-value {
+            font-size: 2rem;
+            font-weight: 700;
+            display: block;
+        }
+        
+        .model-stat-label {
+            font-size: 0.85rem;
+            opacity: 0.9;
+        }
+        
+        /* Model Comparison Cards */
+        .model-comparison {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 1.5rem;
+            margin-bottom: 2rem;
+        }
+        
+        @media (max-width: 900px) {
+            .model-comparison {
+                grid-template-columns: 1fr;
+            }
+        }
+        
+        .model-card {
+            background: var(--bg-card);
+            border-radius: var(--border-radius-lg);
+            padding: 2rem;
+            border: 2px solid transparent;
+            transition: all 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+            cursor: pointer;
+            position: relative;
+            overflow: hidden;
+        }
+        
+        .model-card::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            height: 4px;
+            background: var(--gradient-primary);
+            transform: scaleX(0);
+            transition: transform 0.3s ease;
+        }
+        
+        .model-card:hover::before,
+        .model-card.active::before {
+            transform: scaleX(1);
+        }
+        
+        .model-card:hover {
+            transform: translateY(-10px);
+            box-shadow: 0 20px 40px var(--shadow-color);
+            border-color: var(--primary-color);
+        }
+        
+        .model-card.active {
+            border-color: var(--primary-color);
+            background: var(--gradient-accent);
+        }
+        
+        .model-card.best {
+            border-color: #27ae60;
+        }
+        
+        .model-card.best::before {
+            background: linear-gradient(90deg, #27ae60, #2ecc71);
+        }
+        
+        .model-badge {
+            position: absolute;
+            top: 1rem;
+            right: 1rem;
+            background: linear-gradient(135deg, #f1c40f, #f39c12);
+            color: white;
+            padding: 0.25rem 0.75rem;
+            border-radius: 20px;
+            font-size: 0.75rem;
+            font-weight: 700;
+            animation: pulse 2s infinite;
+        }
+        
+        .model-icon {
+            font-size: 3rem;
+            margin-bottom: 1rem;
+            display: block;
+        }
+        
+        .model-name {
+            font-size: 1.5rem;
+            font-weight: 700;
+            color: var(--text-primary);
+            margin-bottom: 0.5rem;
+        }
+        
+        .model-description {
+            color: var(--text-secondary);
+            font-size: 0.9rem;
+            margin-bottom: 1.5rem;
+        }
+        
+        .model-metrics {
+            display: flex;
+            justify-content: space-between;
+            gap: 1rem;
+            padding-top: 1rem;
+            border-top: 1px solid var(--border-color);
+        }
+        
+        .metric {
+            text-align: center;
+        }
+        
+        .metric-value {
+            font-size: 1.25rem;
+            font-weight: 700;
+            color: var(--primary-color);
+            display: block;
+        }
+        
+        .metric-label {
+            font-size: 0.75rem;
+            color: var(--text-muted);
+            text-transform: uppercase;
+        }
+        
+        /* Progress bar for MAE */
+        .mae-bar {
+            height: 8px;
+            background: var(--bg-secondary);
+            border-radius: 4px;
+            margin: 1rem 0;
+            overflow: hidden;
+        }
+        
+        .mae-fill {
+            height: 100%;
+            border-radius: 4px;
+            transition: width 1s ease;
+        }
+        
+        /* Chart Section */
+        .forecast-section {
+            margin-top: 2rem;
+        }
+        
+        .chart-grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 2rem;
+        }
+        
+        @media (max-width: 1024px) {
+            .chart-grid {
+                grid-template-columns: 1fr;
+            }
+        }
+        
+        /* Model Visualizations Grid */
+        .visualizations-grid {
+            display: grid;
+            grid-template-columns: repeat(2, 1fr);
+            gap: 1.5rem;
+            margin-top: 2rem;
+        }
+        
+        @media (max-width: 900px) {
+            .visualizations-grid {
+                grid-template-columns: 1fr;
+            }
+        }
+        
+        .viz-card {
+            background: var(--bg-card);
+            border-radius: var(--border-radius-lg);
+            padding: 1.5rem;
+            border: 1px solid var(--border-color);
+            transition: all 0.3s ease;
+        }
+        
+        .viz-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 15px 30px var(--shadow-color);
+        }
+        
+        .viz-card h4 {
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+            margin-bottom: 1rem;
+        }
+        
+        .viz-card img {
+            width: 100%;
+            border-radius: var(--border-radius-md);
+            transition: transform 0.3s ease;
+        }
+        
+        .viz-card:hover img {
+            transform: scale(1.02);
+        }
+        
+        .viz-card .insight {
+            margin-top: 1rem;
+            padding: 1rem;
+            background: var(--gradient-accent);
+            border-radius: var(--border-radius-sm);
+            font-size: 0.9rem;
+        }
+        
+        /* Conclusion Section */
+        .conclusion-section {
+            background: var(--gradient-accent);
+            border-radius: var(--border-radius-lg);
+            padding: 2rem;
+            margin-top: 2rem;
+            border: 1px solid var(--border-color);
+        }
+        
+        .conclusion-section h3 {
+            display: flex;
+            align-items: center;
+            gap: 0.75rem;
+        }
+        
+        .recommendation {
+            display: flex;
+            align-items: flex-start;
+            gap: 1.5rem;
+            margin-top: 1.5rem;
+            padding: 1.5rem;
+            background: var(--bg-secondary);
+            border-radius: var(--border-radius-md);
+            border-left: 4px solid #27ae60;
+        }
+        
+        .recommendation-icon {
+            font-size: 3rem;
+        }
+        
+        .recommendation-content h4 {
+            color: #27ae60;
+            margin-bottom: 0.5rem;
+        }
+
+        /* Playground Styles */
+        .playground-section {
+            padding: 2.5rem;
+            margin: 2rem 0;
+            border: 2px solid var(--primary-color);
+            position: relative;
+        }
+
+        .playground-header {
+            margin-bottom: 2rem;
+            text-align: center;
+        }
+
+        .playground-grid {
+            display: grid;
+            grid-template-columns: 1fr 2fr;
+            gap: 2.5rem;
+            align-items: start;
+        }
+
+        @media (max-width: 1024px) {
+            .playground-grid {
+                grid-template-columns: 1fr;
+            }
+        }
+
+        .controls-card {
+            background: var(--bg-secondary);
+            padding: 2rem;
+            border-radius: var(--border-radius-lg);
+            box-shadow: 0 10px 25px var(--shadow-color);
+        }
+
+        .control-group {
+            margin-bottom: 2rem;
+        }
+
+        .control-label {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 1rem;
+            font-weight: 600;
+            color: var(--text-primary);
+        }
+
+        .param-desc {
+            font-size: 0.8rem;
+            color: var(--text-muted);
+            margin-top: 0.5rem;
+            display: block;
+        }
+
+        .param-value {
+            background: var(--primary-color);
+            color: white;
+            padding: 0.2rem 0.6rem;
+            border-radius: 12px;
+            font-size: 0.9rem;
+            min-width: 25px;
+            text-align: center;
+        }
+
+        /* Custom Range Slider */
+        input[type="range"] {
+            width: 100%;
+            height: 6px;
+            background: var(--bg-primary);
+            border-radius: 5px;
+            outline: none;
+            -webkit-appearance: none;
+            appearance: none;
+        }
+
+        input[type="range"]::-webkit-slider-thumb {
+            -webkit-appearance: none;
+            appearance: none;
+            width: 20px;
+            height: 20px;
+            background: var(--primary-color);
+            border-radius: 50%;
+            cursor: pointer;
+            transition: transform 0.2s;
+            border: 3px solid white;
+            box-shadow: 0 0 10px var(--shadow-color);
+        }
+
+        input[type="range"]::-webkit-slider-thumb:hover {
+            transform: scale(1.2);
+        }
+
+        .visual-indicator {
+            margin-top: 2rem;
+            padding: 1rem;
+            background: var(--gradient-accent);
+            border-radius: var(--border-radius-md);
+            font-style: italic;
+            font-size: 0.9rem;
+            text-align: center;
+        }
+    </style>
+</head>
+
+<body>
+
+<nav class="main-nav">
+    <ul>
+        <li><strong class="brand"><i class="fa-solid fa-mug-hot"></i> CoffeeTime</strong></li>
+    </ul>
+    <ul>
+        <li><a href="/">Home</a></li>
+        <li><a href="/eda">EDA</a></li>
+        <li><a href="/modeling" class="active">Modeling</a></li>
+        <li><a href="/question">Questions</a></li>
+        <li class="nav-theme-switcher">
+            <button class="nav-color-btn coffee" data-theme="coffee" title="Coffee Theme"></button>
+            <button class="nav-color-btn pink" data-theme="pink" title="Pink Theme"></button>
+            <button class="nav-color-btn blue" data-theme="blue" title="Blue Theme"></button>
+            <button class="nav-color-btn green" data-theme="green" title="Green Theme"></button>
+        </li>
+        <li>
+            <button id="theme-toggle" class="theme-btn" title="Toggle Dark/Light Mode">
+                <span class="theme-icon"><i class="fa-solid fa-moon"></i></span>
+            </button>
+        </li>
+    </ul>
+</nav>
+
+<main class="container">
+
+    
+    <section class="hero-modeling">
+        <h1><i class="fa-solid fa-chart-line"></i> Forecasting Models</h1>
+        <p>Compare time series models to predict coffee sales demand</p>
+        <div class="model-stats">
+            <div class="model-stat">
+                <span class="model-stat-value">3</span>
+                <span class="model-stat-label">Models Tested</span>
+            </div>
+            <div class="model-stat">
+                <span class="model-stat-value">3.54</span>
+                <span class="model-stat-label">Best MAE</span>
+            </div>
+            <div class="model-stat">
+                <span class="model-stat-value">SARIMAX</span>
+                <span class="model-stat-label">Winner <i class="fa-solid fa-trophy"></i></span>
+            </div>
+        </div>
+    </section>
+
+    
+    <section>
+        <h2 style="margin-bottom: 1.5rem;"><i class="fa-solid fa-microscope"></i> Model Comparison</h2>
+        <div class="model-comparison">
+            <!-- ARIMA Card -->
+            <div class="model-card" id="card-arima" onclick="selectModel('ARIMA')">
+                <span class="model-icon"><i class="fa-solid fa-chart-line"></i></span>
+                <h3 class="model-name">ARIMA</h3>
+                <p class="model-description">AutoRegressive Integrated Moving Average - A classic time series model for non-seasonal data.</p>
+                <div class="mae-bar">
+                    <div class="mae-fill" style="width: 81%; background: linear-gradient(90deg, #A0522D, #CD853F);"></div>
+                </div>
+                <div class="model-metrics">
+                    <div class="metric">
+                        <span class="metric-value">4.86</span>
+                        <span class="metric-label">MAE</span>
+                    </div>
+                    <div class="metric">
+                        <span class="metric-value">Good</span>
+                        <span class="metric-label">Baseline</span>
+                    </div>
+                    <div class="metric">
+                        <span class="metric-value">Fast</span>
+                        <span class="metric-label">Training</span>
+                    </div>
+                </div>
+            </div>
+
+           
+            <div class="model-card" id="card-auto-arima" onclick="selectModel('Auto ARIMA')">
+                <span class="model-icon"><i class="fa-solid fa-robot"></i></span>
+                <h3 class="model-name">Auto ARIMA</h3>
+                <p class="model-description">Automated hyperparameter selection for ARIMA - finds optimal (p,d,q) parameters.</p>
+                <div class="mae-bar">
+                    <div class="mae-fill" style="width: 84%; background: linear-gradient(90deg, #D4A574, #E8C9A4);"></div>
+                </div>
+                <div class="model-metrics">
+                    <div class="metric">
+                        <span class="metric-value">5.03</span>
+                        <span class="metric-label">MAE</span>
+                    </div>
+                    <div class="metric">
+                        <span class="metric-value">Auto</span>
+                        <span class="metric-label">Tuning</span>
+                    </div>
+                    <div class="metric">
+                        <span class="metric-value">Medium</span>
+                        <span class="metric-label">Training</span>
+                    </div>
+                </div>
+            </div>
+
+            
+            <div class="model-card best active" id="card-sarimax" onclick="selectModel('SARIMAX')">
+                <span class="model-badge"><i class="fa-solid fa-star"></i> BEST</span>
+                <span class="model-icon"><i class="fa-solid fa-trophy"></i></span>
+                <h3 class="model-name">SARIMAX</h3>
+                <p class="model-description">Seasonal ARIMA with eXogenous variables - captures weekly patterns in coffee sales.</p>
+                <div class="mae-bar">
+                    <div class="mae-fill" style="width: 59%; background: linear-gradient(90deg, #27ae60, #2ecc71);"></div>
+                </div>
+                <div class="model-metrics">
+                    <div class="metric">
+                        <span class="metric-value" style="color: #27ae60;">3.54</span>
+                        <span class="metric-label">MAE</span>
+                    </div>
+                    <div class="metric">
+                        <span class="metric-value">Weekly</span>
+                        <span class="metric-label">Seasonality</span>
+                    </div>
+                    <div class="metric">
+                        <span class="metric-value">High</span>
+                        <span class="metric-label">Accuracy</span>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    
+    <section class="forecast-section glass-card">
+        <div class="section-header">
+            <h2><i class="fa-solid fa-chart-bar"></i> Performance Visualization</h2>
+            <button id="toggle-forecast" class="btn-toggle">
+                <span class="toggle-icon"><i class="fa-solid fa-eye-slash"></i></span> Hide Charts
+            </button>
+        </div>
+
+        <div id="forecast-charts" class="chart-grid">
+            <div class="chart-card" style="background: transparent; padding: 0;">
+                <h4 style="margin-bottom: 1rem;"><i class="fa-solid fa-bullseye"></i> Model MAE Comparison</h4>
+                <p class="chart-description">Lower MAE = Better performance. Hover for details.</p>
+                <div class="d3-chart-wrapper" id="d3-model-chart" style="height: 300px;"></div>
+                <div class="d3-tooltip" id="d3-model-tooltip"></div>
+            </div>
+
+            <div class="chart-card" style="background: transparent; padding: 0;">
+                <h4 style="margin-bottom: 1rem;"><i class="fa-solid fa-crystal-ball"></i> Sales Forecast</h4>
+                <p class="chart-description">Historical data + 3-month prediction using SARIMAX.</p>
+                <div class="chart-wrapper" style="height: 280px;">
+                    <canvas id="forecast-chart"></canvas>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <section class="playground-section glass-card animate-fade-in-up">
+        <div class="playground-header">
+            <h2>Interactive ARIMA Playground</h2>
+            <p>Manually tune parameters to see how the forecast reacts.</p>
+        </div>
+
+        <div class="playground-grid">
+            <div class="controls-card">
+                <div class="control-group">
+                    <label class="control-label">
+                        <span>P (Autoregressive)</span>
+                        <span class="param-value" id="val-p">1</span>
+                    </label>
+                    <input type="range" id="param-p" min="0" max="5" value="1" step="1">
+                </div>
+
+                <div class="control-group">
+                    <label class="control-label">
+                        <span>D (Integrated)</span>
+                        <span class="param-value" id="val-d">0</span>
+                    </label>
+                    <input type="range" id="param-d" min="0" max="2" value="0" step="1">
+                </div>
+
+                <div class="control-group">
+                    <label class="control-label">
+                        <span>Q (Moving Average)</span>
+                        <span class="param-value" id="val-q">1</span>
+                    </label>
+                    <input type="range" id="param-q" min="0" max="5" value="1" step="1">
+                </div>
+            </div>
+
+            <div class="chart-card" style="background: transparent; padding: 0;">
+                <h4 style="margin-bottom: 1rem;">Dynamic Forecast View</h4>
+                <div class="chart-wrapper" style="height: 350px;">
+                    <canvas id="playground-chart"></canvas>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <section>
+        <h2 style="margin: 2rem 0 1rem;"><i class="fa-solid fa-chart-area"></i> Detailed Model Results</h2>
+        <div class="visualizations-grid">
+            <div class="viz-card">
+                <h4><i class="fa-solid fa-chart-column"></i> Train/Test Split</h4>
+                <img src="static/img/modeling/test.png" alt="Train Test Split">
+                <p class="insight">
+                    <strong>80/20 Split:</strong> Training data used to fit models, test data for evaluation.
+                </p>
+            </div>
+            
+            <div class="viz-card">
+                <h4><i class="fa-solid fa-chart-line"></i> ARIMA Predictions</h4>
+                <img src="static/img/modeling/arima.png" alt="ARIMA Model">
+                <p class="insight">
+                    <strong>MAE: 4.86</strong> - Captures trends but misses weekly peaks.
+                </p>
+            </div>
+            
+            <div class="viz-card">
+                <h4><i class="fa-solid fa-robot"></i> Auto ARIMA Results</h4>
+                <img src="static/img/modeling/auto_arima.png" alt="Auto ARIMA">
+                <p class="insight">
+                    <strong>MAE: 5.03</strong> - Automated tuning, smooth predictions.
+                </p>
+            </div>
+            
+            <div class="viz-card" style="border: 2px solid #27ae60;">
+                <h4><i class="fa-solid fa-trophy"></i> SARIMAX (Winner)</h4>
+                <img src="static/img/modeling/sarimax.png" alt="SARIMAX Model">
+                <p class="insight" style="background: linear-gradient(135deg, #e8f5e9, #c8e6c9);">
+                    <strong style="color: #27ae60;">MAE: 3.54</strong> - Best performer! Captures weekly seasonality perfectly.
+                </p>
+            </div>
+        </div>
+    </section>
+
+    <section class="conclusion-section">
+        <h3><i class="fa-solid fa-lightbulb"></i> Conclusion & Recommendation</h3>
+        <div class="recommendation">
+            <span class="recommendation-icon"><i class="fa-solid fa-trophy"></i></span>
+            <div class="recommendation-content">
+                <h4>SARIMAX is the Recommended Model</h4>
+                <p>
+                    Based on our analysis, <strong>SARIMAX</strong> outperforms other models with the lowest MAE of <strong>3.54</strong>. 
+                    It successfully captures the weekly seasonality in coffee sales (higher sales on weekdays, lower on weekends) 
+                    and can be used for:
+                </p>
+                <ul style="margin-top: 0.75rem; margin-left: 1.5rem;">
+                    <li> Inventory planning and stock management</li>
+                    <li> Staff scheduling based on predicted demand</li>
+                    <li> Revenue forecasting and budgeting</li>
+                    <li> Identifying peak hours and optimizing operations</li>
+                </ul>
+            </div>
+        </div>
+    </section>
+
+</main>
+
+<footer class="main-footer">
+    <div class="footer-content container">
+        <div class="footer-section">
+            <h4><i class="fa-solid fa-mug-hot"></i> CoffeeTime Analytics</h4>
+            <p>Time series forecasting for coffee sales data.</p>
+        </div>
+        <div class="footer-section">
+            <h4>Quick Links</h4>
+            <ul>
+                <li><a href="/">Home</a></li>
+                <li><a href="/eda">EDA</a></li>
+                <li><a href="/modeling">Modeling</a></li>
+                <li><a href="/question">Contact</a></li>
+            </ul>
+        </div>
+    </div>
+    <div class="footer-bottom">
+        <p>&copy; 2024 CoffeeTime Analytics</p>
+    </div>
+</footer>
+
+<script src="/static/script.js"></script>
+<script>
+
+document.addEventListener('DOMContentLoaded', function() {
+    loadModelCharts();
+    initModelPageControls();
+    animateModelCards();
+    initPlayground(); 
+});
+
+
+function animateModelCards() {
+    const cards = document.querySelectorAll('.model-card');
+    cards.forEach((card, i) => {
+        card.style.opacity = '0';
+        card.style.transform = 'translateY(30px)';
+        setTimeout(() => {
+            card.style.transition = 'all 0.6s cubic-bezier(0.175, 0.885, 0.32, 1.275)';
+            card.style.opacity = '1';
+            card.style.transform = 'translateY(0)';
+        }, 200 + i * 150);
+    });
+    
+   
+    setTimeout(() => {
+        document.querySelectorAll('.mae-fill').forEach(bar => {
+            const width = bar.style.width;
+            bar.style.width = '0';
+            setTimeout(() => {
+                bar.style.width = width;
+            }, 100);
+        });
+    }, 800);
+}
+
+
+function selectModel(modelName) {
+    const cards = document.querySelectorAll('.model-card');
+    cards.forEach(card => card.classList.remove('active'));
+    
+    const selectedCard = document.getElementById(`card-${modelName.toLowerCase().replace(' ', '-')}`);
+    if (selectedCard) {
+        selectedCard.classList.add('active');
+        
+        
+        const vizSection = document.querySelector('.visualizations-grid');
+        if (vizSection) {
+            vizSection.scrollIntoView({ behavior: 'smooth', block: 'start' });
+        }
+    }
+}
+
+async function loadModelCharts() {
+    try {
+        const response = await fetch('/data/forecast');
+        const data = await response.json();
+        
+        createForecastChart(data);
+        createModelComparisonD3();
+    } catch (error) {
+        console.error('Error loading model charts:', error);
+    }
+}
+
+function createForecastChart(data) {
+    const canvas = document.getElementById('forecast-chart');
+    if (!canvas) return;
+    
+    const ctx = canvas.getContext('2d');
+    const isDark = document.documentElement.getAttribute('data-theme') === 'dark';
+    const textColor = isDark ? '#FAF7F2' : '#2C1810';
+    
+    const allLabels = [...data.historical.labels];
+    const historicalValues = [...data.historical.values];
+    const forecastValues = new Array(historicalValues.length).fill(null);
+    
+    data.forecast.forEach(f => {
+        allLabels.push(f.month);
+        historicalValues.push(null);
+        forecastValues.push(f.predicted_sales);
+    });
+    
+    if (data.historical.values.length > 0 && data.forecast.length > 0) {
+        forecastValues[data.historical.values.length - 1] = data.historical.values[data.historical.values.length - 1];
+    }
+    
+    new Chart(ctx, {
+        type: 'line',
+        data: {
+            labels: allLabels,
+            datasets: [
+                {
+                    label: 'Historical Sales',
+                    data: historicalValues,
+                    borderColor: '#8B4513',
+                    backgroundColor: 'rgba(139, 69, 19, 0.1)',
+                    fill: true,
+                    tension: 0.4,
+                    pointRadius: 5,
+                    pointHoverRadius: 8
+                },
+                {
+                    label: 'SARIMAX Forecast',
+                    data: forecastValues,
+                    borderColor: '#27ae60',
+                    backgroundColor: 'rgba(39, 174, 96, 0.15)',
+                    borderDash: [8, 4],
+                    fill: true,
+                    tension: 0.4,
+                    pointRadius: 7,
+                    pointStyle: 'rectRot',
+                    pointBackgroundColor: '#27ae60'
+                }
+            ]
+        },
+        options: {
+            responsive: true,
+            maintainAspectRatio: false,
+            plugins: {
+                legend: {
+                    labels: { 
+                        color: textColor,
+                        usePointStyle: true,
+                        padding: 20
+                    }
+                },
+                tooltip: {
+                    backgroundColor: 'rgba(0,0,0,0.8)',
+                    titleFont: { size: 14 },
+                    bodyFont: { size: 13 },
+                    padding: 12,
+                    callbacks: {
+                        label: function(context) {
+                            return context.dataset.label + ': $' + (context.parsed.y || 0).toLocaleString(undefined, {minimumFractionDigits: 2});
+                        }
+                    }
+                }
+            },
+            scales: {
+                x: {
+                    ticks: { color: textColor },
+                    grid: { color: 'rgba(0,0,0,0.05)' }
+                },
+                y: {
+                    ticks: {
+                        color: textColor,
+                        callback: function(value) {
+                            return '$' + (value / 1000).toFixed(0) + 'k';
+                        }
+                    },
+                    grid: { color: 'rgba(0,0,0,0.05)' }
+                }
+            },
+            animation: {
+                duration: 1500,
+                easing: 'easeOutQuart'
+            }
+        }
+    });
+}
+
+function createModelComparisonD3() {
+    const container = document.getElementById('d3-model-chart');
+    if (!container) return;
+    
+    const isDark = document.documentElement.getAttribute('data-theme') === 'dark';
+    const textColor = isDark ? '#FAF7F2' : '#2C1810';
+    
+    const modelData = [
+        { model: 'ARIMA', mae: 4.86, color: '#A0522D', icon: '📈' },
+        { model: 'Auto ARIMA', mae: 5.03, color: '#D4A574', icon: '🤖' },
+        { model: 'SARIMAX', mae: 3.54, color: '#27ae60', icon: '🏆' }
+    ];
+    
+    d3.select(container).selectAll('*').remove();
+    
+    const margin = { top: 40, right: 30, bottom: 60, left: 60 };
+    const width = container.clientWidth - margin.left - margin.right;
+    const height = 280 - margin.top - margin.bottom;
+    
+    const svg = d3.select(container)
+        .append('svg')
+        .attr('width', width + margin.left + margin.right)
+        .attr('height', height + margin.top + margin.bottom)
+        .append('g')
+        .attr('transform', `translate(${margin.left},${margin.top})`);
+    
+    const defs = svg.append('defs');
+    modelData.forEach((d, i) => {
+        const gradient = defs.append('linearGradient')
+            .attr('id', `gradient-${i}`)
+            .attr('x1', '0%')
+            .attr('y1', '0%')
+            .attr('x2', '0%')
+            .attr('y2', '100%');
+        
+        gradient.append('stop')
+            .attr('offset', '0%')
+            .attr('stop-color', d3.rgb(d.color).brighter(0.3));
+        
+        gradient.append('stop')
+            .attr('offset', '100%')
+            .attr('stop-color', d.color);
+    });
+    
+    const x = d3.scaleBand()
+        .range([0, width])
+        .domain(modelData.map(d => d.model))
+        .padding(0.35);
+    
+    const y = d3.scaleLinear()
+        .domain([0, 6])
+        .range([height, 0]);
+    
+    svg.append('g')
+        .attr('transform', `translate(0,${height})`)
+        .call(d3.axisBottom(x))
+        .selectAll('text')
+        .style('fill', textColor)
+        .style('font-family', 'Inter')
+        .style('font-size', '12px')
+        .style('font-weight', '500');
+    
+    svg.append('g')
+        .call(d3.axisLeft(y).ticks(6))
+        .selectAll('text')
+        .style('fill', textColor)
+        .style('font-family', 'Inter');
+    
+    svg.append('text')
+        .attr('transform', 'rotate(-90)')
+        .attr('y', -45)
+        .attr('x', -height / 2)
+        .attr('text-anchor', 'middle')
+        .style('fill', textColor)
+        .style('font-family', 'Inter')
+        .style('font-size', '11px')
+        .text('Mean Absolute Error (Lower = Better)');
+    
+    const tooltip = d3.select('#d3-model-tooltip');
+    
+    svg.selectAll('.bar')
+        .data(modelData)
+        .enter()
+        .append('rect')
+        .attr('class', 'bar')
+        .attr('x', d => x(d.model))
+        .attr('width', x.bandwidth())
+        .attr('y', height)
+        .attr('height', 0)
+        .attr('fill', (d, i) => `url(#gradient-${i})`)
+        .attr('rx', 8)
+        .attr('ry', 8)
+        .style('cursor', 'pointer')
+        .style('filter', 'drop-shadow(0 4px 6px rgba(0,0,0,0.1))')
+        .on('mouseover', function(event, d) {
+            d3.select(this)
+                .transition()
+                .duration(200)
+                .style('filter', 'drop-shadow(0 8px 15px rgba(0,0,0,0.2))')
+                .attr('transform', 'translateY(-5px)');
+            
+            tooltip
+                .style('opacity', 1)
+                .style('left', (event.pageX + 15) + 'px')
+                .style('top', (event.pageY - 15) + 'px')
+                .html(`
+                    <div style="font-size: 24px; margin-bottom: 5px;">${d.icon}</div>
+                    <strong style="font-size: 14px;">${d.model}</strong><br/>
+                    <span style="font-size: 18px; color: ${d.color};">${d.mae}</span> MAE
+                `);
+        })
+        .on('mouseout', function(event, d) {
+            d3.select(this)
+                .transition()
+                .duration(200)
+                .style('filter', 'drop-shadow(0 4px 6px rgba(0,0,0,0.1))')
+                .attr('transform', 'translateY(0)');
+            
+            tooltip.style('opacity', 0);
+        })
+        .transition()
+        .duration(1000)
+        .delay((d, i) => i * 200)
+        .ease(d3.easeBounceOut)
+        .attr('y', d => y(d.mae))
+        .attr('height', d => height - y(d.mae));
+    
+    svg.selectAll('.value-label')
+        .data(modelData)
+        .enter()
+        .append('text')
+        .attr('class', 'value-label')
+        .attr('x', d => x(d.model) + x.bandwidth() / 2)
+        .attr('y', d => y(d.mae) - 10)
+        .attr('text-anchor', 'middle')
+        .style('fill', textColor)
+        .style('font-family', 'Inter')
+        .style('font-size', '14px')
+        .style('font-weight', '700')
+        .style('opacity', 0)
+        .text(d => d.mae)
+        .transition()
+        .duration(500)
+        .delay((d, i) => 1000 + i * 200)
+        .style('opacity', 1);
+    
+    const best = modelData.reduce((a, b) => a.mae < b.mae ? a : b);
+    svg.append('text')
+        .attr('x', x(best.model) + x.bandwidth() / 2)
+        .attr('y', y(best.mae) - 30)
+        .attr('text-anchor', 'middle')
+        .style('font-size', '24px')
+        .style('opacity', 0)
+        .text('⭐')
+        .transition()
+        .delay(1800)
+        .duration(500)
+        .style('opacity', 1);
+}
+
+function initModelPageControls() {
+    const toggleBtn = document.getElementById('toggle-forecast');
+    const charts = document.getElementById('forecast-charts');
+    
+    if (toggleBtn && charts) {
+        toggleBtn.addEventListener('click', () => {
+            const isHidden = charts.classList.toggle('hidden');
+            toggleBtn.innerHTML = isHidden 
+                ? '<span class="toggle-icon">👁️</span> Show Charts'
+                : '<span class="toggle-icon">👁️</span> Hide Charts';
+        });
+    }
+}
+
+let playgroundChart = null;
+
+function initPlayground() {
+    const params = ['p', 'd', 'q'];
+    params.forEach(param => {
+        const slider = document.getElementById(`param-${param}`);
+        const display = document.getElementById(`val-${param}`);
+        
+        if (slider && display) {
+            slider.addEventListener('input', () => {
+                display.innerText = slider.value;
+                updatePlayground();
+            });
+        }
+    });
+    
+   
+    updatePlayground();
+}
+
+async function updatePlayground() {
+    const p = document.getElementById('param-p').value;
+    const d = document.getElementById('param-d').value;
+    const q = document.getElementById('param-q').value;
+    
+    try {
+        const response = await fetch(`/data/arima_playground?p=${p}&d=${d}&q=${q}`);
+        const data = await response.json();
+        
+        renderPlaygroundChart(data);
+    } catch (error) {
+        console.error('Error updating playground:', error);
+    }
+}
+
+function renderPlaygroundChart(data) {
+    const ctx = document.getElementById('playground-chart').getContext('2d');
+    const isDark = document.documentElement.getAttribute('data-theme') === 'dark';
+    const textColor = isDark ? '#FAF7F2' : '#2C1810';
+    
+    const labels = [...data.historical.labels, ...data.forecast.map(f => f.month)];
+    const historicalSeries = [...data.historical.values, ...new Array(data.forecast.length).fill(null)];
+    
+    const forecastSeries = new Array(data.historical.values.length - 1).fill(null);
+    forecastSeries.push(data.historical.values[data.historical.values.length - 1]);
+    data.forecast.forEach(f => forecastSeries.push(f.value));
+    
+    if (playgroundChart) {
+        playgroundChart.destroy();
+    }
+    
+    playgroundChart = new Chart(ctx, {
+        type: 'line',
+        data: {
+            labels: labels,
+            datasets: [
+                {
+                    label: 'Historical',
+                    data: historicalSeries,
+                    borderColor: '#8B4513',
+                    backgroundColor: 'transparent',
+                    borderWidth: 3,
+                    pointRadius: 4,
+                    tension: 0.3
+                },
+                {
+                    label: 'Your ARIMA Prediction',
+                    data: forecastSeries,
+                    borderColor: '#E91E63',
+                    backgroundColor: 'rgba(233, 30, 99, 0.1)',
+                    fill: true,
+                    borderWidth: 4,
+                    pointRadius: 6,
+                    pointBackgroundColor: '#E91E63',
+                    tension: 0.4
+                }
+            ]
+        },
+        options: {
+            responsive: true,
+            maintainAspectRatio: false,
+            plugins: {
+                legend: { labels: { color: textColor } },
+                tooltip: {
+                    mode: 'index',
+                    intersect: false,
+                    callbacks: {
+                        label: function(context) {
+                            return context.dataset.label + ': $' + context.parsed.y.toLocaleString();
+                        }
+                    }
+                }
+            },
+            scales: {
+                x: { ticks: { color: textColor }, grid: { display: false } },
+                y: { 
+                    ticks: { 
+                        color: textColor,
+                        callback: value => '$' + value 
+                    },
+                    grid: { color: 'rgba(0,0,0,0.05)' }
+                }
+            }
+        }
+    });
+}
+</script>
+    
+    <div class="chatbot-container">
+        <div class="chat-window" id="chat-window">
+            <div class="chat-header">
+                <div class="chat-header-info">
+                    <div class="status-dot"></div>
+                    <h3>☕ Coffee Assistant</h3>
+                </div>
+                <span class="close-chat" id="close-chat">&times;</span>
+            </div>
+            <div class="chat-messages" id="chat-messages">
+            </div>
+            <div class="chat-input-area">
+                <input type="text" id="chat-input" placeholder="Type a message...">
+                <button class="send-btn" id="send-chat" title="Send message">
+                    <svg viewBox="0 0 24 24"><path d="M2.01 21L23 12 2.01 3 2 10l15 2-15 2z"></path></svg>
+                </button>
+            </div>
+        </div>
+        <div class="chatbot-bubble" id="chatbot-bubble" title="Chat with us">
+            <img src="/static/img/chatbot-icon.svg" alt="Chatbot" class="bubble-icon">
+        </div>
+    </div>
+
+    <link rel="stylesheet" href="/static/chatbot.css">
+    <script src="/static/chatbot.js"></script>
+</body>
+</html>

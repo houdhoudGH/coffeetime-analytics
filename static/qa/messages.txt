@@ -1,0 +1,732 @@
+
+----
+Name: Houdhoud
+Message: i love web dev
+Date: 2025-11-18 23:45
+
+----
+Name: Houdhoud
+Message: Yayyy its working
+Date: 2025-11-18 23:53
+
+----
+Name: Bot
+Message: Bot Bot message
+Date: 2025-11-19 14:48
+
+----
+Name: houda gheffari
+Message: thank you
+Date: 2025-11-19 15:12
+
+
+
+----
+Name: Houda
+Message: nice project
+Date: 2025-12-13 19:05
+
+----
+Source: Chatbot
+Message: i'm lost
+Date: 2026-01-02 00:25
+
+----
+Source: Chatbot
+Message: hi
+Date: 2026-01-02 00:25
+
+----
+Source: Chatbot
+Message: hi
+Date: 2026-01-02 00:31
+
+----
+Source: Chatbot
+Message: yes
+Date: 2026-01-02 00:37
+
+----
+Source: Chatbot
+Message: hi
+Date: 2026-01-02 00:38
+
+----
+Source: Chatbot
+Message: hi
+Date: 2026-01-02 00:45
+
+----
+Source: Chatbot
+Message: hi
+Date: 2026-01-02 22:57
+
+----
+Source: Chatbot
+Message: hi
+Date: 2026-01-07 15:35
+
+----
+Source: Chatbot
+Message: hi
+Date: 2026-01-07 16:19
+
+----
+Source: Chatbot
+Message: hi
+Date: 2026-01-07 16:19
+
+----
+Source: Chatbot
+Message: hi
+Date: 2026-01-07 16:19
+
+----
+Source: Chatbot
+Message: hi
+Date: 2026-01-07 16:19
+
+----
+Source: Chatbot
+Message: jo
+Date: 2026-01-07 16:19
+
+----
+Source: Chatbot
+Message: hi
+Date: 2026-01-07 22:08
+
+----
+Source: Chatbot
+Message: hi
+Date: 2026-01-07 22:08
+
+----
+Source: Chatbot
+Message: hi
+Date: 2026-01-07 22:09
+
+----
+Source: Chatbot
+Message: hi
+Date: 2026-01-07 22:10
+
+----
+Source: Chatbot
+Message: hi
+Date: 2026-01-07 22:12
+
+----
+Source: Chatbot
+Message: hi
+Date: 2026-01-07 22:13
+
+----
+Source: Chatbot
+Message: hi
+Date: 2026-01-07 22:14
+
+----
+Source: Chatbot
+Message: hi
+Date: 2026-01-07 22:24
+
+----
+Source: Chatbot
+Message: hi
+Date: 2026-01-07 22:26
+
+----
+Source: Chatbot
+Message: hi
+Date: 2026-01-07 22:26
+
+----
+Source: Chatbot
+Message: What is data science?"
+Date: 2026-01-07 22:30
+
+----
+Source: Chatbot
+Message: hi
+Date: 2026-01-07 22:47
+
+----
+Source: Chatbot
+Message: what this website for
+Date: 2026-01-07 22:47
+
+----
+Source: Chatbot
+Message: hi
+Date: 2026-01-07 22:55
+
+----
+Source: Chatbot
+Message: can you tell me how i can naviagte the website ?
+Date: 2026-01-07 22:56
+
+----
+Source: Chatbot
+Message: whats the capital of france
+Date: 2026-01-07 22:57
+
+----
+Source: Chatbot
+Message: hi
+Date: 2026-01-07 23:00
+
+----
+Source: Chatbot
+Message: hi
+Date: 2026-01-07 23:20
+
+----
+Source: Chatbot
+Message: hi
+Date: 2026-01-07 23:24
+
+----
+Source: Chatbot
+Message: i want to know more about this website whatsthe purpose of it
+Date: 2026-01-07 23:25
+
+----
+Source: Chatbot
+Message: can you explain to me the website stuctor?
+Date: 2026-01-07 23:26
+
+----
+Source: Chatbot
+Message: how can apply this website to other domain
+Date: 2026-01-07 23:27
+
+----
+Source: Chatbot
+Message: what something special about this website?
+Date: 2026-01-07 23:27
+
+----
+Source: Chatbot
+Message: parler vous francais ?
+Date: 2026-01-07 23:28
+
+----
+Source: Chatbot
+Message: hi
+Date: 2026-01-07 23:33
+
+----
+Source: Chatbot
+Message: hi
+Date: 2026-01-07 23:36
+
+----
+Source: Chatbot
+Message: hi
+Date: 2026-01-07 23:38
+
+----
+Source: Chatbot
+Message: hi
+Date: 2026-01-07 23:39
+
+----
+Source: Chatbot
+Message: hi
+Date: 2026-01-07 23:43
+
+----
+Source: Chatbot
+Message: hi
+Date: 2026-01-07 23:57
+
+----
+Source: Chatbot
+Message: can you explain to me what the website is all about ?
+Date: 2026-01-07 23:58
+
+----
+Source: Chatbot
+Message: can you tell the structor of the website please ?
+Date: 2026-01-07 23:59
+
+----
+Source: Chatbot
+Message: how created this website
+Date: 2026-01-08 00:00
+
+----
+Source: Chatbot
+Message: hi
+Date: 2026-01-08 00:02
+
+----
+Source: Chatbot
+Message: hi again
+Date: 2026-01-08 00:05
+
+----
+Source: Chatbot
+Message: navigating the website
+Date: 2026-01-08 00:05
+
+----
+Source: Chatbot
+Message: how can i use this model in other forcating projects?
+Date: 2026-01-08 00:06
+
+----
+Source: Chatbot
+Message: website
+Date: 2026-01-08 00:06
+
+----
+Source: Chatbot
+Message: hi
+Date: 2026-01-08 01:03
+
+----
+Source: Chatbot
+Message: how is houda
+Date: 2026-01-08 01:04
+
+----
+Source: Chatbot
+Message: what's the link to the stats page
+Date: 2026-01-08 01:05
+
+----
+Source: Chatbot
+Message: explain to me this website
+Date: 2026-01-08 01:07
+
+----
+Source: Chatbot
+Message: salut
+Date: 2026-01-08 01:08
+
+----
+Source: Chatbot
+Message: parler vous le francais
+Date: 2026-01-08 01:08
+
+----
+Source: Chatbot
+Message: ok expliquer moi votre mision
+Date: 2026-01-08 01:08
+
+----
+Source: Chatbot
+Message: hi
+Date: 2026-01-08 10:16
+
+----
+Source: Chatbot
+Message: what this website is all about?
+Date: 2026-01-08 10:17
+
+----
+Source: Chatbot
+Message: were is the stats page
+Date: 2026-01-08 10:24
+
+----
+Source: Chatbot
+Message: hi
+Date: 2026-01-08 10:26
+
+----
+Source: Chatbot
+Message: how can i access the stats page ?
+Date: 2026-01-08 10:26
+
+----
+Source: Chatbot
+Message: thank you !
+Date: 2026-01-08 10:27
+
+----
+Source: Chatbot
+Message: whats is the structure of this website ? how many pages there is ?
+Date: 2026-01-08 10:28
+
+----
+Source: Chatbot
+Message: whats the structure of the website ?
+Date: 2026-01-08 10:28
+
+----
+Source: Chatbot
+Message: hi
+Date: 2026-01-08 10:29
+
+----
+Source: Chatbot
+Message: hi
+Date: 2026-01-08 10:29
+
+----
+Source: Chatbot
+Message: how can navigate to the stats page?
+Date: 2026-01-08 10:30
+
+----
+Source: Chatbot
+Message: where i can find the stats ?
+Date: 2026-01-08 10:30
+
+----
+Source: Chatbot
+Message: can breafly explain the structore of the website?
+Date: 2026-01-08 10:31
+
+----
+Source: Chatbot
+Message: whats makes this website speacial ?
+Date: 2026-01-08 10:31
+
+----
+Source: Chatbot
+Message: thank you so much !
+Date: 2026-01-08 10:32
+
+----
+Source: Chatbot
+Message: thanks !
+Date: 2026-01-08 10:42
+
+----
+Source: Chatbot
+Message: no no thanks you !
+Date: 2026-01-08 10:42
+
+----
+Source: Chatbot
+Message: hi
+Date: 2026-01-08 10:46
+
+----
+Source: Chatbot
+Message: hi
+Date: 2026-01-08 10:51
+
+----
+Source: Chatbot
+Message: where are the stats?
+Date: 2026-01-08 10:52
+
+----
+Source: Chatbot
+Message: whats is the website about?
+Date: 2026-01-08 10:52
+
+----
+Source: Chatbot
+Message: what is the structure of the website ?
+Date: 2026-01-08 10:53
+
+----
+Source: Chatbot
+Message: hi
+Date: 2026-01-08 10:54
+
+----
+Source: Chatbot
+Message: hi
+Date: 2026-01-08 10:54
+
+----
+Source: Chatbot
+Message: where is the stats page?
+Date: 2026-01-08 10:55
+
+----
+Source: Chatbot
+Message: briefly tell me how many pages are they in the website?
+Date: 2026-01-08 10:56
+
+----
+Source: Chatbot
+Message: briefly tell me the pages of website
+Date: 2026-01-08 10:56
+
+----
+Source: Chatbot
+Message: briefly tell me the pages of website
+Date: 2026-01-08 10:56
+
+----
+Source: Chatbot
+Message: hi
+Date: 2026-01-08 10:57
+
+----
+Source: Chatbot
+Message: hi
+Date: 2026-01-08 10:57
+
+----
+Source: Chatbot
+Message: hi
+Date: 2026-01-08 11:01
+
+----
+Source: Chatbot
+Message: where is the stats page
+Date: 2026-01-08 11:01
+
+----
+Source: Chatbot
+Message: ?
+Date: 2026-01-08 11:02
+
+----
+Source: Chatbot
+Message: where is the stats page?
+Date: 2026-01-08 11:02
+
+----
+Source: Chatbot
+Message: what is te structure of the website ?
+Date: 2026-01-08 11:03
+
+----
+Source: Chatbot
+Message: hi
+Date: 2026-01-08 11:07
+
+----
+Source: Chatbot
+Message: where is the eda page?
+Date: 2026-01-08 11:08
+
+----
+Source: Chatbot
+Message: hii
+Date: 2026-01-08 11:08
+
+----
+Source: Chatbot
+Message: where is the stats page?
+Date: 2026-01-08 11:09
+
+----
+Source: Chatbot
+Message: hi
+Date: 2026-01-08 11:09
+
+----
+Source: Chatbot
+Message: hi
+Date: 2026-01-08 11:22
+
+----
+Source: Chatbot
+Message: where can i find the stats?
+Date: 2026-01-08 11:23
+
+----
+Source: Chatbot
+Message: nice thank you
+Date: 2026-01-08 11:23
+
+----
+Source: Chatbot
+Message: what other pages exist on the website?
+Date: 2026-01-08 11:23
+
+----
+Source: Chatbot
+Message: can you tell me the best selling coffee type?
+Date: 2026-01-08 11:23
+
+----
+Source: Chatbot
+Message: with what number?
+Date: 2026-01-08 11:24
+
+----
+Source: Chatbot
+Message: the latte is the leader in the market with what number?
+Date: 2026-01-08 11:24
+
+----
+Source: Chatbot
+Message: is there anything special about this website?
+Date: 2026-01-08 11:25
+
+----
+Source: Chatbot
+Message: what the purpose of the playground? and where i can find it?
+Date: 2026-01-08 11:26
+
+----
+Source: Chatbot
+Message: hi
+Date: 2026-01-08 11:28
+
+----
+Source: Chatbot
+Message: hi
+Date: 2026-01-08 11:46
+
+----
+Source: Chatbot
+Message: where is the stats page?
+Date: 2026-01-08 11:46
+
+----
+Source: Chatbot
+Message: how can i find it?
+Date: 2026-01-08 11:46
+
+----
+Source: Chatbot
+Message: thanks?
+Date: 2026-01-08 11:47
+
+----
+Source: Chatbot
+Message: no thanks by
+Date: 2026-01-08 11:47
+
+----
+Source: Chatbot
+Message: hi
+Date: 2026-01-08 13:34
+
+----
+Source: Chatbot
+Message: whats is the structure of the website ?
+Date: 2026-01-08 13:34
+
+----
+Source: Chatbot
+Message: okay thanks
+Date: 2026-01-08 13:34
+
+----
+Source: Chatbot
+Message: what does the eda page contain
+Date: 2026-01-08 13:35
+
+----
+Source: Chatbot
+Message: what about the modelling one ?
+Date: 2026-01-08 13:35
+
+----
+Source: Chatbot
+Message: hi
+Date: 2026-01-08 15:27
+
+----
+Source: Chatbot
+Message: prler vous francais
+Date: 2026-01-08 15:27
+
+----
+Source: Chatbot
+Message: hi
+Date: 2026-01-08 17:11
+
+----
+Source: Chatbot
+Message: where is the stats page?
+Date: 2026-01-08 17:11
+
+----
+Source: Chatbot
+Message: hii
+Date: 2026-01-08 17:11
+
+----
+Source: Chatbot
+Message: hii
+Date: 2026-01-08 17:12
+
+----
+Source: Chatbot
+Message: hi
+Date: 2026-01-08 17:12
+
+----
+Source: Chatbot
+Message: hi
+Date: 2026-01-08 17:12
+
+----
+Source: Chatbot
+Message: whats the purpose of this website ?
+Date: 2026-01-08 17:13
+
+----
+Source: Chatbot
+Message: can you explain to me breifly the EDA page?
+Date: 2026-01-08 17:13
+
+----
+Source: Chatbot
+Message: whats the best selling type of coffee?
+Date: 2026-01-08 17:14
+
+----
+Source: Chatbot
+Message: no thanks
+Date: 2026-01-08 17:14
+
+----
+Source: Chatbot
+Message: i want to know do you speak french?
+Date: 2026-01-08 17:15
+
+----
+Source: Chatbot
+Message: que es ce que il Ya de special dans ce site web ?
+Date: 2026-01-08 17:15
+
+----
+Source: Chatbot
+Message: merci byee
+Date: 2026-01-08 17:16
+
+----
+Source: Chatbot
+Message: hi
+Date: 2026-01-08 17:19
+
+----
+Source: Chatbot
+Message: whats the purpose of this website
+Date: 2026-01-08 17:19
+
+----
+Source: Chatbot
+Message: what pages do we have in this website ?
+Date: 2026-01-08 17:19
+
+----
+Source: Chatbot
+Message: i want to know the best selling coffee type
+Date: 2026-01-08 17:20
+
+----
+Source: Chatbot
+Message: how many languages do you speak
+Date: 2026-01-08 17:20
+
+----
+Source: Chatbot
+Message: are you gpt or llama ?
+Date: 2026-01-08 17:21
+
+----
+Source: Chatbot
+Message: whats capital of france
+Date: 2026-01-08 17:21
+
+----
+Source: Chatbot
+Message: c'est bon merci byebye
+Date: 2026-01-08 17:22
