@@ -19,10 +19,16 @@ From raw coffee shop transactions to a fully interactive analytics platform —<
 with a <strong>data-aware AI chatbot</strong> that answers questions about your own sales data in real time.
 </p>
 
-<!-- drag and drop your demo GIF here (record: home → EDA → modeling → chatbot) -->
-<img src="docs/images/demo.gif" width="85%" alt="CoffeeTime Analytics Demo"/>
-
 </div>
+
+---
+
+## 🎬 Demo Video
+
+<!-- Upload your video to YouTube, take a screenshot as thumbnail, save as docs/images/video_thumbnail.png -->
+[![CoffeeTime Demo](docs/images/video_thumbnail.png)](https://youtube.com/your-link)
+
+*Click to watch the full platform walkthrough*
 
 ---
 
@@ -30,7 +36,7 @@ with a <strong>data-aware AI chatbot</strong> that answers questions about your 
 
 This is not a notebook — it's a **fully deployed, production-grade web application**:
 
-- 🤖 **AI Chatbot (Alaa)** — powered by Llama 3.1-8B via HuggingFace, data-aware, with conversation memory
+- 🤖 **AI Chatbot** — powered by Llama 3.1-8B via HuggingFace, data-aware, multilingual, with conversation memory
 - 📊 **Live REST API** — 6 dynamic JSON endpoints serving real aggregated sales data
 - 🎨 **4 color themes + dark/light mode** — persisted in localStorage
 - 📈 **Dual charting libraries** — Chart.js for trends, D3.js for animated comparisons
@@ -61,65 +67,44 @@ Raw CSV Sales Data (index_1.csv)
         ├── /data/detail/<month> → Drill-down per month
         ├── /data/arima_playground → Interactive ARIMA parameter explorer
         │
-        └── /chat          → AI Chatbot (Alaa) — Llama 3.1-8B via HuggingFace
+        └── /chat          → AI Chatbot — Llama 3.1-8B via HuggingFace
 ```
 
 ---
 
-## 💬 Meet Alaa — The AI Chatbot
+## 📊 The Platform
 
-Every page has a floating chatbot bubble in the bottom-right corner. Click it to open **Alaa**, a data-aware AI assistant:
+### Home Page
 
-<!-- drag and drop chatbot screenshot here -->
 <div align="center">
-  <img src="docs/images/chatbot_demo.png" width="55%" alt="Alaa AI Chatbot"/>
-  <br/>
-  <sub><i>Alaa greets users on load and answers questions about the coffee sales data in real time</i></sub>
+  <img src="Screenshot 2026-05-20 133813.png" width="85%" alt="CoffeeTime Home Hero"/>
+</div>
+
+<div align="center" style="margin-top:8px">
+  <img src="Screenshot 2026-05-20 133505.png" width="48%" alt="Key Insights"/>
+  <img src="Screenshot 2026-05-20 133529.png" width="48%" alt="Analysis Journey"/>
 </div>
 
 <br/>
 
-**What makes Alaa special:**
-
-- **Data-aware** — reads the live CSV on every query and builds a context summary: total revenue, top coffee type, latest month performance
-- **Conversation memory** — remembers the last 20 messages, so follow-up questions work naturally
-- **Personality** — coffee-themed error messages, warm tone, knows the site structure
-- **Powered by Llama 3.1-8B-Instruct** via HuggingFace Inference Router
-- **All conversations logged** to `static/qa/messages.txt` for review
-
-```python
-# Alaa's data context (generated fresh on every message)
-f"Total revenue: ${total_rev} from {total_trans} transactions. 
-  Top coffee: {top_coffee}. 
-  Latest month ({latest_month}): ${latest_sales}"
-```
+- **Hero section** with animated gradient title and coffee image
+- **4 Key Insights cards** — seasonal patterns, peak hours, popular drinks, growth trend
+- **Analysis journey** — 3-step flow from raw data to forecasting
+- Live sample data table loaded from the API
 
 ---
 
-## 📊 The Dashboard
-
-### Home Page
-
-<!-- drag and drop home page screenshot here -->
-<div align="center">
-  <img src="docs/images/home_page.png" width="85%" alt="Home Page"/>
-</div>
-
-- Animated hero section with floating coffee image
-- Key insights cards (seasonal patterns, peak hours, popular drinks, growth trend)
-- Live sample data table loaded from the API
-- Full footer with site links and tech stack
-
 ### EDA Page
 
-<!-- drag and drop EDA page screenshot here -->
 <div align="center">
-  <img src="docs/images/eda_page.png" width="85%" alt="EDA Dashboard"/>
+  <img src="Screenshot 2026-05-20 133438.png" width="85%" alt="EDA Dashboard — Chart.js and D3.js"/>
   <br/>
-  <sub><i>Filter buttons, live Chart.js trend chart, D3.js bar chart, and 10 static analysis plots</i></sub>
+  <sub><i>Live Chart.js monthly trend + D3.js sales by coffee type — both interactive and filterable</i></sub>
 </div>
 
-**Live stats banner** (pulled from `/data` API):
+<br/>
+
+**Live stats banner** (pulled from `/data` API in real time):
 
 | Stat | Value |
 |---|---|
@@ -127,7 +112,7 @@ f"Total revenue: ${total_rev} from {total_trans} transactions.
 | Total Transactions | Live from CSV |
 | Days Analyzed | Live from CSV |
 
-**10 static analysis charts** filterable by category:
+**10 static analysis charts** filterable by category (Hourly / Daily / Monthly / Product):
 
 | Category | Charts |
 |---|---|
@@ -136,12 +121,17 @@ f"Total revenue: ${total_rev} from {total_trans} transactions.
 | Monthly | Monthly distribution, Total monthly sales, Monthly by coffee type |
 | Product | Popularity by count, Revenue by coffee type |
 
+---
+
 ### Modeling Page
 
-<!-- drag and drop modeling page screenshot here -->
 <div align="center">
-  <img src="docs/images/modeling_page.png" width="85%" alt="Forecasting Models"/>
+  <img src="Screenshot 2026-05-20 133557.png" width="85%" alt="Model Comparison"/>
+  <br/>
+  <sub><i>SARIMAX wins with MAE 3.54 — interactive model cards with performance metrics</i></sub>
 </div>
+
+<br/>
 
 | Model | MAE | Notes |
 |---|---|---|
@@ -149,7 +139,66 @@ f"Total revenue: ${total_rev} from {total_trans} transactions.
 | Auto ARIMA | 5.03 | Conservative, smooths over peaks |
 | **SARIMAX (5,0,5)(1,1,1,7)** | **3.54** | ✅ Best — captures weekly cycles perfectly |
 
-Interactive ARIMA playground lets users adjust p, d, q parameters and see simulated forecasts update in real time via the `/data/arima_playground` API.
+<br/>
+
+**Interactive ARIMA Playground** — adjust p, d, q sliders and see the forecast update live:
+
+<div align="center">
+  <img src="Screenshot 2026-05-20 133622.png" width="85%" alt="Interactive ARIMA Playground"/>
+  <br/>
+  <sub><i>Manually tune ARIMA parameters and watch the dynamic forecast react in real time</i></sub>
+</div>
+
+<br/>
+
+<div align="center">
+  <img src="Screenshot 2026-05-20 133646.png" width="85%" alt="Conclusion and Recommendation"/>
+</div>
+
+---
+
+### Questions Page
+
+<div align="center">
+  <img src="Screenshot 2026-05-20 133727.png" width="85%" alt="FAQ Page"/>
+</div>
+
+- Contact form with real-time validation and character counter
+- FAQ section with collapsible cards
+- All messages saved to `static/qa/messages.txt`
+
+---
+
+## 💬 AI Chatbot Assistant
+
+Every page has a floating chatbot bubble in the bottom-right corner. The Coffee Assistant is powered by **Llama 3.1-8B** and reads live sales data to answer questions in context.
+
+<div align="center">
+  <img src="Screenshot 2026-05-20 134955.png" width="32%" alt="Chatbot greeting"/>
+  <img src="Screenshot 2026-05-20 135012.png" width="32%" alt="Chatbot answering"/>
+  <img src="Screenshot 2026-05-20 135059.png" width="32%" alt="Chatbot in French"/>
+</div>
+
+<br/>
+
+**Highlights from the demo above:**
+- Greets users on first load with conversation memory
+- Answers navigation questions: *"where can I find the models?"* → directs to Modeling page
+- **Multilingual** — switches to French when asked: *"vous parlez français?"* → *"Oui, je parle un peu de français..."*
+- Reads live sales data context on every query
+
+**What makes it special:**
+- **Data-aware** — total revenue, top coffee type, latest month performance injected into every prompt
+- **Conversation memory** — remembers last 20 messages for natural follow-up questions
+- **Multilingual** — responds in the user's language automatically
+- **All conversations logged** to `static/qa/messages.txt`
+
+```python
+# Data context injected into every chatbot prompt
+f"Total revenue: ${total_rev} from {total_trans} transactions.
+  Top coffee: {top_coffee}.
+  Latest month ({latest_month}): ${latest_sales}"
+```
 
 ---
 
@@ -174,13 +223,14 @@ Interactive ARIMA playground lets users adjust p, d, q parameters and see simula
 - **Export to PNG** — download charts directly from the browser
 - **Real-time form validation** — name, email, message with character counter
 - **Responsive design** — Pico CSS + custom media queries
+- **Font Awesome 6** icons throughout
 
 ---
 
 ## 📁 Project Structure
 
 ```
-coffeetime/
+coffeetime-analytics/
 ├── app.py                     # Flask app + REST API + chatbot endpoint
 ├── index.html                 # Home page
 ├── eda.html                   # EDA dashboard
@@ -213,7 +263,7 @@ coffeetime/
 
 | Layer | Technology |
 |---|---|
-| **Backend** | Flask, Python 3 |
+| **Backend** | Flask, Python 3, Flask-CORS |
 | **AI Chatbot** | Llama 3.1-8B-Instruct via HuggingFace Inference Router |
 | **Time Series** | Statsmodels (ARIMA, SARIMAX), pmdarima (Auto ARIMA) |
 | **Data Analysis** | Pandas, NumPy, Matplotlib, Seaborn |
@@ -228,8 +278,8 @@ coffeetime/
 ## 🚀 Getting Started
 
 ```bash
-git clone https://github.com/houdhoudGH/coffeetime.git
-cd coffeetime
+git clone https://github.com/houdhoudGH/coffeetime-analytics.git
+cd coffeetime-analytics
 
 python -m venv .venv
 source .venv/bin/activate    # Windows: .venv\Scripts\activate
@@ -244,7 +294,7 @@ HF_API_TOKEN=your-huggingface-token
 HF_MODEL_ID=meta-llama/Llama-3.1-8B-Instruct
 ```
 
-Run the app:
+Run:
 ```bash
 python app.py
 ```
@@ -258,18 +308,26 @@ Open `http://localhost:5000` 🚀
 1. **Staff 10–12 AM heavily** — consistently the busiest window across all weekdays
 2. **Stock Hot Chocolate and Cocoa in winter** — demand is weather-driven
 3. **October and February are peak months** — plan inventory accordingly
-4. **Latte drives revenue** — highest revenue per cup despite not being the most purchased
-5. **SARIMAX predicts demand with MAE 3.54 cups** — reliable enough for daily ordering
+4. **Latte drives revenue** — highest revenue per cup despite not being most purchased
+5. **SARIMAX predicts demand with MAE 3.54** — reliable for daily ordering decisions
+
+---
+
+## 🎤 Presentation
+
+This project was presented as a full platform pitch covering the problem, solution, platform overview, forecasting models, AI assistant, and business value.
+
+📊 [View Slide Deck (PDF)](docs/CoffeeTime_Presentation.pdf)
 
 ---
 
 ## 🔮 Future Work
 
 - [ ] Deploy to cloud (Render or Railway)
-- [ ] Add live CSV upload — get instant fresh analysis
+- [ ] Add live CSV upload — instant fresh analysis
 - [ ] Extend SARIMAX with external regressors (weather, holidays)
 - [ ] Add Prophet model for comparison
-- [ ] Give Alaa memory across sessions (persistent conversation history)
+- [ ] Give the chatbot persistent memory across sessions
 
 ---
 

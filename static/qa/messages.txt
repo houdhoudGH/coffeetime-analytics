@@ -730,3 +730,38 @@ Date: 2026-01-08 17:21
 Source: Chatbot
 Message: c'est bon merci byebye
 Date: 2026-01-08 17:22
+
+----
+Source: Chatbot
+Message: hi
+Date: 2026-05-20 13:38
+
+----
+Source: Chatbot
+Message: where can i find the best model?
+Date: 2026-05-20 13:39
+
+----
+Source: Chatbot
+Message: thank you !
+Date: 2026-05-20 13:41
+
+----
+Source: Chatbot
+Message: hi
+Date: 2026-05-20 13:48
+
+----
+Source: Chatbot
+Message: where can i find the models ?
+Date: 2026-05-20 13:48
+
+----
+Source: Chatbot
+Message: thank you !
+Date: 2026-05-20 13:48
+
+----
+Source: Chatbot
+Message: non merci ! vous parler francais?
+Date: 2026-05-20 13:49
