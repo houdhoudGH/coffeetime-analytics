@@ -330,19 +330,22 @@ This project was presented as a full platform pitch covering the problem, soluti
 - [ ] Give the chatbot persistent memory across sessions
 
 ---
-
+ 
 ## 📄 License
-
+ 
 MIT — see [LICENSE](LICENSE) for details.
-
+ 
 ---
-
+ 
 <div align="center">
-
-**Built by [Houda](https://github.com/houdhoudGH)**
-*· Master 2 Data Science & NLP · AI Engineer ·*
-
+        
+### Made with 💜 by **Gheffari Nour El Houda**
+ 
+*Master 2 Data Science & NLP · AI Engineer*
+ 
+[![GitHub](https://img.shields.io/badge/GitHub-houdhoudGH-181717?style=flat-square&logo=github)](https://github.com/houdhoudGH)
+ 
 <br/>
-<sub>Flask · Llama 3.1 · Statsmodels · Chart.js · D3.js · Pico CSS · HuggingFace</sub>
-
+<sub>Llama 2 · LangChain · Pinecone · Flask · sentence-transformers · CTransformers</sub>
+ 
 </div>
