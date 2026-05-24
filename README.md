@@ -176,7 +176,7 @@ Every page has a floating chatbot bubble in the bottom-right corner. The Coffee 
 <div align="center">
   <img src="Screenshot 2026-05-20 134955.png" width="32%" alt="Chatbot greeting"/>
   <img src="Screenshot 2026-05-20 135012.png" width="32%" alt="Chatbot answering"/>
-  <img src="Screenshot 2026-05-20 135059.png" width="32%" alt="Chatbot in French"/>
+  <img src="Screenshot 2026-05-20 135047.png" width="32%" alt="Chatbot in French"/>
 </div>
 
 <br/>
