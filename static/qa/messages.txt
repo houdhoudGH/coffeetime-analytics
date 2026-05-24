@@ -765,3 +765,38 @@ Date: 2026-05-20 13:48
 Source: Chatbot
 Message: non merci ! vous parler francais?
 Date: 2026-05-20 13:49
+
+----
+Source: Chatbot
+Message: hi where can i find the eda page?
+Date: 2026-05-24 16:11
+
+----
+Source: Chatbot
+Message: what new or fun in the project?
+Date: 2026-05-24 16:12
+
+----
+Source: Chatbot
+Message: tell me what is the most sold cofee type?
+Date: 2026-05-24 16:13
+
+----
+Source: Chatbot
+Message: and what the least?
+Date: 2026-05-24 16:13
+
+----
+Source: Chatbot
+Message: based on our forcast how much demand will we have next hour?
+Date: 2026-05-24 16:20
+
+----
+Source: Chatbot
+Message: make it brief next time
+Date: 2026-05-24 16:20
+
+----
+Source: Chatbot
+Message: based on our forcast how much will the demand be next hour and on what type?
+Date: 2026-05-24 16:21
